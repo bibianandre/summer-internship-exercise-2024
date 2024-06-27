@@ -1,7 +1,5 @@
 package com.premiumminds.internship.teknonymy;
 
-import java.util.concurrent.Future;
-
 interface ITeknonymyService {
   /**
    * Method to get a Person Teknonymy Name
