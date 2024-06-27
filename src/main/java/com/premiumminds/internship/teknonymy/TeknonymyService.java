@@ -18,7 +18,7 @@ class TeknonymyService implements ITeknonymyService {
   public String getTeknonymy(Person person) {
     if (person == null)
       return "Person object is null";
-    if (person.children() == null || person.children().length <= 0)
+    if (!hasChildren(person))
       return "";
 
     String relation = (person.sex() == 'M') ? "father" : "mother";
