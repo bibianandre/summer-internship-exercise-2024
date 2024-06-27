@@ -130,28 +130,28 @@ public class TeknonymyServiceTest {
     Person mike = new Person("Mike",'M',new Person[]{laura,lily,luna},LocalDateTime.of(1910,1,1,0,0));
 
     /**
-     * Find Teknonymy Name for root ancestor
+     * Assert Teknonymy Name for root ancestor
      */
     String result = new TeknonymyService().getTeknonymy(mike);
     String expected = "great-grandfather of John";
     assertEquals(result, expected);
 
     /**
-     * Find Teknonymy Name for 1st generation person w/ descendants
+     * Assert Teknonymy Name for 1st generation person w/ descendants
      */
     result = new TeknonymyService().getTeknonymy(lily);
     expected = "grandmother of John";
     assertEquals(result, expected);
 
     /**
-     * Find Teknonymy Name for 2nd generation person w/ descendants
+     * Assert Teknonymy Name for 2nd generation person w/ descendants
      */
     result = new TeknonymyService().getTeknonymy(kyle);
     expected = "father of John";
     assertEquals(result, expected);
 
     /**
-     * Find Teknonymy Name for 1st generation person (no descendants)
+     * Assert Teknonymy Name for 1st generation person (no descendants)
      */
     result = new TeknonymyService().getTeknonymy(luna);
     expected = "";
@@ -201,7 +201,7 @@ public class TeknonymyServiceTest {
     }
 
     /**
-     * Find Teknonymy Name for root ancestor.
+     * Assert Teknonymy Name for root ancestor.
      */
     ancestor = current.poll();
     String result = new TeknonymyService().getTeknonymy(ancestor);
@@ -235,7 +235,7 @@ public class TeknonymyServiceTest {
     }
 
     /**
-     * Find Teknonymy Name for root ancestor.
+     * Assert Teknonymy Name for root ancestor.
      */
     String result = new TeknonymyService().getTeknonymy(parent); 
     StringBuilder answer = new StringBuilder("grandfather of Ilda");
@@ -247,7 +247,7 @@ public class TeknonymyServiceTest {
     assertEquals(result, expected);
 
     /**
-     * Find Teknonymy Name for 50th generation sub-tree ancestor.
+     * Assert Teknonymy Name for 50th generation sub-tree ancestor.
      */
     while (gen < 50) {
       child = parent.children()[0];
