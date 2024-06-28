@@ -57,13 +57,13 @@ class TeknonymyService implements ITeknonymyService {
 
     while (true) {
       Person parent = parents.poll();
-      explored.add(parent);
       if (hasChildren(parent)) {
         for (Person child : parent.children()) {
           assertParentChildAge(parent, child);
           next.add(child);
         }
       }
+      explored.add(parent);
       if (parents.isEmpty()) {
         if (next.isEmpty()) {
           break; //last generation was reached
