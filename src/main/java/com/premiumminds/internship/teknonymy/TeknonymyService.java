@@ -2,6 +2,7 @@ package com.premiumminds.internship.teknonymy;
 
 import com.premiumminds.internship.teknonymy.exceptions.*;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.List;
@@ -44,21 +45,24 @@ class TeknonymyService implements ITeknonymyService {
    * @return String which is the Teknonymy Name.
   */
   private String getDescendant(Person person) throws ParentChildAgeException {
-    assertParentChildAge(person);
     Queue<Person> parents = new LinkedList<>();
-    List<Person> next = new LinkedList<>();
-    List<Person> explored = new LinkedList<>();
+    for (Person child : person.children()) {
+      assertParentChildAge(person, child);
+      parents.add(child);
+    }
+    List<Person> next = new ArrayList<>();
+    List<Person> explored = new ArrayList<>();
     String relation = (person.sex() == 'M') ? "father" : "mother";
     int generation = 1;
-    parents.addAll(List.of(person.children()));
 
     while (true) {
       Person parent = parents.poll();
-      assertParentChildAge(parent);
       explored.add(parent);
       if (hasChildren(parent)) {
-        for (Person child : parent.children())
+        for (Person child : parent.children()) {
+          assertParentChildAge(parent, child);
           next.add(child);
+        }
       }
       if (parents.isEmpty()) {
         if (next.isEmpty()) {
@@ -119,17 +123,14 @@ class TeknonymyService implements ITeknonymyService {
       throw new UnknownTeknonymySuffixException(person.sex(), person.name());
   }
 
-  /** Checks if the given person has descendants older than them.
+  /** Checks if the given child is older than their parent.
    * 
-   * @param person to check.
-   * @throws ParentChildAgeException if a descendant older than the person is found.
+   * @param person the parent.
+   * @param child the descendant.
+   * @throws ParentChildAgeException if descendant is older than the parent.
   */
-  private void assertParentChildAge(Person person) throws ParentChildAgeException {
-    if (hasChildren(person)) {
-      for (Person child : person.children()) {
-        if (child.dateOfBirth().isBefore(person.dateOfBirth())) 
-          throw new ParentChildAgeException(child.name(), person.name());
-      }
-    }
+  private void assertParentChildAge(Person parent, Person child) throws ParentChildAgeException {
+    if (child.dateOfBirth().isBefore(parent.dateOfBirth())) 
+      throw new ParentChildAgeException(child.name(), parent.name());
   }
 }

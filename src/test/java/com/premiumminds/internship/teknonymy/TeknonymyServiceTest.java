@@ -3,6 +3,7 @@ package com.premiumminds.internship.teknonymy;
 import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDateTime; 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.List;
@@ -169,7 +170,7 @@ public class TeknonymyServiceTest {
     int minute = 0;
     Person ancestor = null; //root ancestor
     Queue<Person> current = new LinkedList<>();
-    List<Person> parents = new LinkedList<>();
+    List<Person> parents = new ArrayList<>();
 
     while (lastgen > 0) {
       Person child1 = new Person("Ivan",'M',null,LocalDateTime.of(year,month,day,hour,minute));
